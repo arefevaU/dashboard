@@ -6,6 +6,7 @@ import plotly.express as px
 from wordcloud import WordCloud
 import base64
 from io import BytesIO
+import data as df
 
 # Загрузка данных
 df = pd.read_csv('Netflix.csv', sep=',')
@@ -164,6 +165,3 @@ def update_wordcloud(src):
     wordcloud.to_image().save(buf, format="PNG")
     data = base64.b64encode(buf.getbuffer()).decode("utf8")
     return "data:image/png;base64,{}".format(data)
-
-if __name__ == '__main__':
-    app.run_server(debug=True)

@@ -1,6 +1,8 @@
 import pandas as pd
 
+# Загрузка данных
 df = pd.read_csv('Netflix.csv', sep=',')
+
 # Преобразование date_added в datetime формат
 df['date_added'] = pd.to_datetime(df['date_added'])
 
@@ -29,5 +31,10 @@ df_exploded = split_and_explode(df_exploded, 'cast')
 df_exploded = split_and_explode(df_exploded, 'director')
 df_exploded = split_and_explode(df_exploded, 'listed_in')
 
+# Разделение данных по типам
+df_movies = df_exploded[df_exploded['type'] == 'Movie']
+df_shows = df_exploded[df_exploded['type'] == 'TV Show']
+
 # Группировка по жанрам и подсчет уникальных шоу
-genre_counts = df_exploded.groupby('listed_in')['show_id'].nunique().reset_index(name='count')
+genre_counts_movies = df_movies.groupby('listed_in')['show_id'].nunique().reset_index(name='count')
+genre_counts_shows = df_shows.groupby('listed_in')['show_id'].nunique().reset_index(name='count')
