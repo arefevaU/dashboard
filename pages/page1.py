@@ -1,11 +1,6 @@
-import pandas as pd
-import dash
 from dash import dcc, html, callback
 from dash.dependencies import Input, Output
 import plotly.express as px
-from wordcloud import WordCloud
-import base64
-from io import BytesIO
 import dash_bootstrap_components as dbc
 import data as df
 
@@ -13,29 +8,27 @@ def page_layout():
     layout = html.Div([
     html.H3('Общая статистика', style = {'margin-bottom':'2rem', 'text-align':'center'}),
     
-    dbc.Row([
-        html.Div([
-            html.Div([
-                html.H3('Количество фильмов', style = {'padding': '5px 5px 5px 5px', 'background-color':'grey'}),
-                html.P(df.movies_count, style = {'padding': '5px 5px 5px 5px'})
-            ], style = {'margin-right': '50%', 'border':'solid 2px', 'border-radius': '10px'}),
-            html.Div([
-                html.H3('Количество сериалов', style = {'padding': '5px 5px 5px 5px', 'background-color':'grey'}),
-                html.P(df.shows_count, style = {'padding': '5px 5px 5px 5px'})
-            ], style = {'margin-right': '50%', 'border':'solid 2px', 'border-radius': '10px'}),
+    html.Div([
+        dbc.Row([
+            dbc.Col([
+                html.H3('Фильмы', style = {'padding': '5px 5px 5px 5px'}),
+                html.P(df.movies_count, style = {'padding': '5px 5px 5px 5px', 'font-size':'28px', 'color':'black', 'font-weight':'bold', 'text-align':'right'})
+            ],width=3, style={'border':'solid 1.5px', 'border-radius':'10px', 'margin-right':'1rem'}),
+            dbc.Col([
+                html.H3('ТВ-шоу', style = {'padding': '5px 5px 5px 5px'}),
+                html.P(df.shows_count, style = {'padding': '5px 5px 5px 5px', 'font-size':'28px', 'color':'black', 'font-weight':'bold', 'text-align':'right'})
+            ],width=3, style={'border':'solid 1.5px', 'border-radius':'10px'}),
         ], className='card-container')
-    ]),
-    
+    ], style={'margin':'0rem 0rem 1rem 1rem'}),
     
     html.Div([
-        html.H2('График добавлений контента по месяцам/годам'),
+        html.H3('Добавление контента по месяцам и годам', style = {'margin-bottom':'2rem', 'text-align':'center', 'padding-top':'15px'}),
         dcc.Graph(
             figure=px.bar(df.df.groupby(['year_added', 'month_added']).size().reset_index(name='count'), 
-                          x='year_added', y='count', color='month_added', 
-                          title='Добавления контента по месяцам/годам')
+                          x='year_added', y='count', color='month_added'), config={'displayModeBar': False}
         )
-    ]),
-    ])
+    ], style={'border':'solid 1.5px', 'border-radius':'10px'}), 
+    ], style={'margin-left':'2rem'})
     return layout
 
 layout= dbc.Container([

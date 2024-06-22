@@ -1,9 +1,9 @@
 import dash_bootstrap_components as dbc
 
 from dash import Dash, Input, Output, dcc, html
-from pages import page1, age, country, genres, actors
+from pages import page1, country, genres, actors, age
 
-external_stylesheets = [dbc.themes.MINTY]  # Вместо FLATLY выберите свою тему из https://bootswatch.com/
+external_stylesheets = [dbc.themes.LUX]  # Вместо FLATLY выберите свою тему из https://bootswatch.com/
 app = Dash(__name__, external_stylesheets=external_stylesheets,  use_pages=True)
 app.config.suppress_callback_exceptions = True
 
@@ -13,9 +13,9 @@ SIDEBAR_STYLE = {
     "top": 0,
     "left": 0,
     "bottom": 0,
-    "width": "16rem",
+    "width": "19rem",
     "padding": "2rem 1rem",
-    "background-color": "#1D6996", # Цвет фона боковой панели меняем на тот, который больше всего подходит
+    "background-color": "#FFB266", # Цвет фона боковой панели меняем на тот, который больше всего подходит
 }
 
 # Справа от боковой панели размешается основной дашборд. Добавим отступы
@@ -33,9 +33,9 @@ sidebar = html.Div(
             [
                 dbc.NavLink("Общая статистика", href="/", active="exact"),
                 dbc.NavLink("Жанры и категории", href="/page-1", active="exact"),
-                dbc.NavLink("Страны", href="/page-2", active="exact"),
-                dbc.NavLink("Актёры", href="/page-3", active="exact"),
-                dbc.NavLink("Возрастные ретинги", href="/page-4", active="exact"),
+                dbc.NavLink("Страны производства", href="/page-2", active="exact"),
+                dbc.NavLink("Актёры и режиссёры", href="/page-3", active="exact"),
+                dbc.NavLink("Возрастные рейтинги", href="/page-4", active="exact"),
             ],
             vertical=True,
             pills=True,
