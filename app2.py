@@ -38,8 +38,13 @@ df_exploded = split_and_explode(df_exploded, 'cast')
 df_exploded = split_and_explode(df_exploded, 'director')
 df_exploded = split_and_explode(df_exploded, 'listed_in')
 
+# Разделение данных по типам
+df_movies = df_exploded[df_exploded['type'] == 'Movie']
+df_shows = df_exploded[df_exploded['type'] == 'TV Show']
+
 # Группировка по жанрам и подсчет уникальных шоу
-genre_counts = df_exploded.groupby('listed_in')['show_id'].nunique().reset_index(name='count')
+genre_counts_movies = df_movies.groupby('listed_in')['show_id'].nunique().reset_index(name='count')
+genre_counts_shows = df_shows.groupby('listed_in')['show_id'].nunique().reset_index(name='count')
 
 # Создание дашборда Dash
 app = dash.Dash(__name__)
@@ -75,14 +80,14 @@ app.layout = html.Div([
         html.H2('Жанры и категории'),
         html.Div([
             dcc.Graph(
-                id='genre_distribution',
-                figure=px.pie(genre_counts, values='count', names='listed_in', 
-                              title='Распределение контента по жанрам')
+                id='genre_distribution_movies',
+                figure=px.pie(genre_counts_movies, values='count', names='listed_in', 
+                              title='Распределение фильмов по жанрам')
             ),
             dcc.Graph(
-                id='genre_count_histogram',
-                figure=px.histogram(df.assign(genre_count=df['listed_in'].apply(lambda x: len(x.split(',')))), 
-                                    x='genre_count', title='Количество жанров на одно шоу или фильм')
+                id='genre_distribution_shows',
+                figure=px.pie(genre_counts_shows, values='count', names='listed_in', 
+                              title='Распределение шоу по категориям')
             )
         ])
     ]),
@@ -96,12 +101,6 @@ app.layout = html.Div([
                                     locations='country', locationmode='country names', color='count', 
                                     title='Тепловая карта стран по количеству контента', 
                                     color_continuous_scale='viridis', range_color=[0, df_exploded['show_id'].nunique()])
-            ),
-            dcc.Graph(
-                id='content_by_country_year',
-                figure=px.line(df_exploded.groupby(['year_added', 'country']).size().reset_index(name='count'), 
-                            x='year_added', y='count', color='country', 
-                            title='Добавления контента по странам по годам')
             )
         ])
     ]),
