@@ -22,10 +22,12 @@ def page_layout():
     ], style={'margin':'0rem 0rem 1rem 1rem'}),
     
     html.Div([
-        html.H3('Добавление контента по месяцам и годам', style = {'margin-bottom':'2rem', 'text-align':'center', 'padding-top':'15px'}),
+        html.H3('Добавление контента по месяцам и годам', style = {'margin-bottom':'2rem', 'text-align':'center', 'padding-top':'20px'}),
         dcc.Graph(
             figure=px.bar(df.df.groupby(['year_added', 'month_added']).size().reset_index(name='count'), 
-                          x='year_added', y='count', color='month_added'), config={'displayModeBar': False}
+                          x='year_added', y='count', color='month_added', labels={'year_added': '', 'count': '', 'month_added': ''}), 
+                          config={'displayModeBar': False},
+                          style={'padding':'0px 0px 10px 0px'}
         )
     ], style={'border':'solid 1.5px', 'border-radius':'10px'}), 
     ], style={'margin-left':'2rem'})

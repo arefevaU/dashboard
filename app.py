@@ -1,7 +1,7 @@
 import dash_bootstrap_components as dbc
 
 from dash import Dash, Input, Output, dcc, html
-from pages import page1, country, genres, actors, age
+from pages import page1, country, genres, actors, age, info
 
 external_stylesheets = [dbc.themes.LUX]  # Вместо FLATLY выберите свою тему из https://bootswatch.com/
 app = Dash(__name__, external_stylesheets=external_stylesheets,  use_pages=True)
@@ -36,6 +36,7 @@ sidebar = html.Div(
                 dbc.NavLink("Страны производства", href="/page-2", active="exact"),
                 dbc.NavLink("Актёры и режиссёры", href="/page-3", active="exact"),
                 dbc.NavLink("Возрастные рейтинги", href="/page-4", active="exact"),
+                dbc.NavLink("О проекте", href="/page-5", active="exact"),
             ],
             vertical=True,
             pills=True,
@@ -63,6 +64,8 @@ def render_page_content(pathname):
         return actors.layout
     elif pathname == "/page-4":
         return age.layout
+    elif pathname == "/page-5":
+        return info.layout
     # Если пользователь попытается перейти на другую страницу, верните сообщение 404. Мы изменим её в следующей практической.
     return html.Div(
         [

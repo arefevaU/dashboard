@@ -6,7 +6,7 @@ import data as df
 
 def page_layout():
     layout = html.Div([
-            html.H2('Анализ по жанрам и категориям', style = {'margin-bottom':'2rem', 'text-align':'center'}),
+            html.H3('Анализ по жанрам и категориям', style = {'margin-bottom':'2rem', 'text-align':'center'}),
             html.Div([
                 dcc.Graph(
                     id='genre_distribution_movies',
