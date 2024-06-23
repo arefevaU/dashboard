@@ -4,7 +4,7 @@ from dash import Dash, Input, Output, dcc, html
 from pages import page1, country, genres, actors, age, info
 
 external_stylesheets = [dbc.themes.LUX]  # Вместо FLATLY выберите свою тему из https://bootswatch.com/
-app = Dash(__name__, external_stylesheets=external_stylesheets,  use_pages=True)
+app = Dash(__name__, external_stylesheets=external_stylesheets)
 app.config.suppress_callback_exceptions = True
 
 # Задаем аргументы стиля для боковой панели. Мы используем position:fixed и фиксированную ширину
